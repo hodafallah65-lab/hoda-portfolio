@@ -1,0 +1,209 @@
+import React, { useMemo, useState } from "react";
+
+// Portfolio website redesigned for filmmaker identity
+// RTL Persian layout, cinematic aesthetic
+
+const projects = [
+  {
+    title: "Parliament Nightmare",
+    chip: "فیلم عروسکی – دارک فانتزی",
+    year: "2020",
+    blurb:
+      "فیلم دارک فانتزی عروسکی؛ روایت مهاجرت فرزند عادل بزدوده و چمدانی پر از خاطرات. ترکیب تکنیک عروسکی با درام روانشناختی.",
+    roles: ["نویسنده", "کارگردان"],
+    media: "/assets/parliament.jpg",
+    links: [
+      { label: "پوستر", href: "#" },
+      { label: "تیزر", href: "#" },
+    ],
+  },
+  {
+    title: "لکه (The Stain)",
+    chip: "فیلم کوتاه – AI",
+    year: "2025",
+    blurb:
+      "فیلم کوتاه درام کمتر از ۷ دقیقه؛ تجربه بلوغ دختر نوجوان در خانواده‌ای سنتی. ساخته‌شده با هوش مصنوعی.",
+    roles: ["نویسنده", "کارگردان"],
+    media: "/assets/lakke.jpg",
+    links: [
+      { label: "پوستر", href: "#" },
+      { label: "تیزر", href: "#" },
+    ],
+  },
+  {
+    title: "دُردانه (Dordaneh)",
+    chip: "سریال انیمیشن تاریخی",
+    year: "In Development",
+    blurb:
+      "سریال انیمیشن ۵۵ قسمتی درباره زندگی امام حسین (ع) از کودکی تا شهادت. تلفیق پژوهش تاریخی دقیق با روایت تصویری مدرن.",
+    roles: ["نویسنده", "Showrunner"],
+    media: "/assets/dordaneh.jpg",
+    links: [
+      { label: "خلاصه داستان", href: "#" },
+      { label: "کانسپت آرت", href: "#" },
+    ],
+  },
+];
+
+const industryExperience = [
+  {
+    title: "Asphyxia (خفه‌گی)",
+    year: "2017",
+    role: "Wardrobe Assistant (جامه‌دار)",
+    detail: "فیلم بلند سینمایی به کارگردانی فریدون جیرانی – ژانر جنایی/تریلر.",
+  },
+];
+
+const performanceExperience = [
+  {
+    title: "Puppetry Acting & Manipulation",
+    detail: "بازیگری و عروسک‌گردانی در نمایش‌های عروسکی؛ تجربه عملی در اجراهای زنده.",
+  },
+  {
+    title: "Theatre Acting",
+    detail: "تجربه بازیگری در تئاتر صحنه‌ای؛ نقش‌آفرینی در نمایش‌های کلاسیک و مدرن.",
+  },
+];
+
+function Section({ id, title, children }) {
+  return (
+    <section id={id} className="scroll-mt-24 mb-16">
+      <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-6 mt-2 border-b pb-2">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function Badge({ children }) {
+  return (
+    <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium">
+      {children}
+    </span>
+  );
+}
+
+function ProjectCard({ p }) {
+  return (
+    <div className="rounded-2xl border p-4 md:p-6 hover:shadow-lg transition-shadow bg-white/60 dark:bg-neutral-900/60">
+      <div className="aspect-[16/9] w-full overflow-hidden rounded-xl border mb-4 bg-neutral-100 dark:bg-neutral-800">
+        <img
+          src={p.media}
+          alt={p.title}
+          className="h-full w-full object-cover object-center"
+        />
+      </div>
+      <div className="flex flex-wrap items-center gap-2 mb-2">
+        <h3 className="text-xl md:text-2xl font-bold">{p.title}</h3>
+        <Badge>{p.chip}</Badge>
+        <span className="text-sm text-neutral-500">{p.year}</span>
+      </div>
+      <p className="text-neutral-700 dark:text-neutral-300 leading-7 mb-4">{p.blurb}</p>
+      <div className="flex flex-wrap gap-2 mb-4">
+        {p.roles.map((r) => (
+          <span key={r} className="text-xs border px-2 py-1 rounded-md bg-neutral-50 dark:bg-neutral-800">
+            {r}
+          </span>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-3">
+        {p.links.map((l) => (
+          <a key={l.label} href={l.href} className="text-sm underline underline-offset-4 hover:no-underline">
+            {l.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function Portfolio() {
+  const [dark, setDark] = useState(true);
+  const dir = "rtl";
+
+  return (
+    <main className={`${dark ? "dark" : ""}`}>
+      <div dir={dir} className="min-h-screen bg-neutral-50 dark:bg-black text-neutral-900 dark:text-neutral-50">
+        {/* Header */}
+        <header className="sticky top-0 z-50 backdrop-blur bg-black/80 border-b border-neutral-800">
+          <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-2xl bg-gradient-to-tr from-red-700 to-yellow-500" />
+              <div className="leading-tight">
+                <div className="font-extrabold">هدی فلاح</div>
+                <div className="text-xs text-neutral-400">Filmmaker | Screenwriter</div>
+              </div>
+            </div>
+            <nav className="hidden md:flex items-center gap-4 text-sm">
+              <a href="#projects">فیلم‌ها</a>
+              <a href="#industry">تجربه سینمایی</a>
+              <a href="#performance">تجربه نمایشی</a>
+              <a href="#contact">تماس</a>
+            </nav>
+            <button onClick={() => setDark(!dark)} className="text-xs border px-2 py-1 rounded-md">
+              {dark ? "☀️" : "🌙"}
+            </button>
+          </div>
+        </header>
+
+        {/* Hero */}
+        <div className="relative overflow-hidden">
+          <div className="max-w-6xl mx-auto px-4 md:px-6 py-16 md:py-24 text-center">
+            <h1 className="text-4xl md:text-6xl font-black mb-6">روایت‌گر تجربه‌های انسانی با زبان تصویر</h1>
+            <p className="max-w-2xl mx-auto text-neutral-300 leading-8 mb-8">
+              از نمایش عروسکی و تجربه‌ی صحنه تا فیلم کوتاه و سریال انیمیشن؛ مسیری مستقل و خلاق از سینمای حرفه‌ای ایران تا تولیدات نسل جدید با هوش مصنوعی.
+            </p>
+            <div className="flex justify-center gap-4">
+              <a href="#projects" className="rounded-xl px-6 py-3 border font-semibold hover:shadow">🎥 دیدن آثار</a>
+              <a href="#contact" className="rounded-xl px-6 py-3 border font-semibold hover:shadow">📑 همکاری</a>
+            </div>
+          </div>
+        </div>
+
+        <main className="max-w-6xl mx-auto px-4 md:px-6 py-10">
+          <Section id="projects" title="فیلم‌ها و پروژه‌ها">
+            <div className="grid md:grid-cols-2 gap-6">
+              {projects.map((p) => (
+                <ProjectCard key={p.title} p={p} />
+              ))}
+            </div>
+          </Section>
+
+          <Section id="industry" title="Industry Experience">
+            <ul className="space-y-4 text-neutral-300">
+              {industryExperience.map((exp) => (
+                <li key={exp.title}>
+                  <div className="font-bold">{exp.title}</div>
+                  <div className="text-sm">{exp.role} – {exp.year}</div>
+                  <div className="text-sm text-neutral-400">{exp.detail}</div>
+                </li>
+              ))}
+            </ul>
+          </Section>
+
+          <Section id="performance" title="Performance Experience">
+            <ul className="space-y-4 text-neutral-300">
+              {performanceExperience.map((exp, i) => (
+                <li key={i}>
+                  <div className="font-bold">{exp.title}</div>
+                  <div className="text-sm text-neutral-400">{exp.detail}</div>
+                </li>
+              ))}
+            </ul>
+          </Section>
+
+          <Section id="contact" title="ارتباط و همکاری">
+            <div className="space-y-4 text-neutral-300">
+              <div>📧 <a href="mailto:hoda@example.com" className="underline">hoda@example.com</a></div>
+              <div>🌐 <a href="#" className="underline">Behance</a> | <a href="#" className="underline">LinkedIn</a> | <a href="#" className="underline">Instagram</a></div>
+              <div>تهران / Remote</div>
+            </div>
+          </Section>
+        </main>
+
+        <footer className="border-t border-neutral-800 py-6 text-center text-xs text-neutral-500">
+          © {new Date().getFullYear()} Hoda Fallah – Filmmaker
+        </footer>
+      </div>
+    </main>
+  );
+}
